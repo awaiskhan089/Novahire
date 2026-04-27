@@ -52,14 +52,7 @@ class MenuHelper
                     'title' => 'Menu',
                     'items' => [
                         ['icon' => 'dashboard', 'name' => 'Dashboard', 'path' => '/recruiter/dashboard'],
-                        [
-                            'icon' => 'briefcase',
-                            'name' => 'Jobs',
-                            'subItems' => [
-                                ['name' => 'All Jobs', 'path' => '/recruiter/jobs'],
-                                ['name' => 'Post New Job', 'path' => '/recruiter/jobs/create'],
-                            ],
-                        ],
+                        ['icon' => 'briefcase', 'name' => 'Jobs', 'path' => '/recruiter/jobs'],
                         ['icon' => 'users', 'name' => 'Candidates', 'path' => '/recruiter/candidates'],
                         ['icon' => 'pipeline', 'name' => 'Applications', 'path' => '/recruiter/applications'],
                         ['icon' => 'calendar', 'name' => 'Interview Slots', 'path' => '/recruiter/interview-slots'],

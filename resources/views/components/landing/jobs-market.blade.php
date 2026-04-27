@@ -27,14 +27,14 @@
 
             <div class="mt-8 rounded-2xl border border-slate-200/80 bg-slate-50/80 p-3 dark:border-slate-700 dark:bg-slate-950/40 sm:p-4" data-jobs-market>
                 <div class="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1fr)_minmax(0,1fr)_auto_auto] lg:items-end">
-                    <label class="block">
-                    <span class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Search</span>
-                    <input type="text" data-filter-search placeholder="Role, company, skill, location"
-                        class="h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                    <label for="jobs-filter-search" class="block">
+                        <span class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Search</span>
+                        <input id="jobs-filter-search" type="text" data-filter-search placeholder="Role, company, skill, location"
+                            class="h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                     </label>
-                    <label class="block">
+                    <label for="jobs-filter-location" class="block">
                         <span class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Location</span>
-                        <select data-filter-location
+                        <select id="jobs-filter-location" data-filter-location
                             class="h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                             <option value="">Any location</option>
                             @foreach($locations as $location)
@@ -42,9 +42,9 @@
                             @endforeach
                         </select>
                     </label>
-                    <label class="block">
+                    <label for="jobs-filter-mode" class="block">
                         <span class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Work mode</span>
-                        <select data-filter-mode
+                        <select id="jobs-filter-mode" data-filter-mode
                             class="h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                             <option value="">Any mode</option>
                             <option value="onsite">On-site</option>
@@ -105,6 +105,27 @@
                                 View Role
                             </a>
                         </div>
+                        <script type="application/ld+json">
+                        {
+                            "@@context": "https://schema.org",
+                            "@@type": "JobPosting",
+                            "title": "{{ $job->title }}",
+                            "description": {!! json_encode(strip_tags((string) $job->description)) !!},
+                            "datePosted": "{{ $job->published_at ? $job->published_at->toIso8601String() : now()->toIso8601String() }}",
+                            "employmentType": "{{ strtoupper(str_replace('_', '_', (string) $job->job_type)) }}",
+                            "hiringOrganization": {
+                                "@@type": "Organization",
+                                "name": "{{ data_get($job, 'company.name', config('app.name')) }}"
+                            },
+                            "jobLocation": {
+                                "@@type": "Place",
+                                "address": {
+                                    "@@type": "PostalAddress",
+                                    "addressLocality": "{{ $job->location ?: 'Anywhere' }}"
+                                }
+                            }
+                        }
+                        </script>
                     </article>
                 @empty
                     <div class="col-span-full rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center dark:border-slate-700">

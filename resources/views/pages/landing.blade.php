@@ -17,6 +17,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? config('app.name', 'NovaHire') }}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="NovaHire is an AI-first recruiting platform helping teams hire faster with structured screening and automated workflows.">
+    <meta name="keywords" content="recruiting, AI screening, hiring platform, applicant tracking system, ATS">
+    <link rel="canonical" href="{{ url()->current() }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ $title ?? config('app.name', 'NovaHire') }}">
+    <meta property="og:description" content="NovaHire is an AI-first recruiting platform helping teams hire faster with structured screening and automated workflows.">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ asset('images/logo/novahire-mark.svg') }}">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title ?? config('app.name', 'NovaHire') }}">
+    <meta name="twitter:description" content="NovaHire is an AI-first recruiting platform helping teams hire faster with structured screening and automated workflows.">
+    <meta name="twitter:image" content="{{ asset('images/logo/novahire-mark.svg') }}">
+
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "WebSite",
+      "name": "{{ config('app.name', 'NovaHire') }}",
+      "url": "{{ url('/') }}",
+      "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "{{ route('jobs.index') }}?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Organization",
+      "name": "{{ config('app.name', 'NovaHire') }}",
+      "url": "{{ url('/') }}",
+      "logo": "{{ asset('images/logo/novahire-mark.svg') }}"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -72,23 +114,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('theme-toggle');
-            const toggleIcon = document.getElementById('theme-toggle-icon');
-            const syncIcon = () => {
-                if (!toggleIcon) return;
-                const isDark = document.documentElement.classList.contains('dark');
-                toggleIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-                if (window.createIcons && window.lucideIcons) window.createIcons({ icons: window.lucideIcons });
-            };
             if (toggle) {
                 toggle.addEventListener('click', () => {
                     document.documentElement.classList.toggle('dark');
                     const isDark = document.documentElement.classList.contains('dark');
                     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                    syncIcon();
                 });
             }
-            if (window.createIcons && window.lucideIcons) window.createIcons({ icons: window.lucideIcons });
-            syncIcon();
         });
     </script>
     @livewireScripts

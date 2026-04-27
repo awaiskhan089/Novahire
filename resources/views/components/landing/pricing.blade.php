@@ -83,7 +83,7 @@
                     $isEnterprise = str_contains($key, 'enterprise');
                     $isUpgradeForm = false;
                     
-                    $cta = (string) data_get($plan, 'cta', ($isEnterprise ? 'Contact Sales' : 'Get Started'));
+                    $cta = (string) data_get($plan, 'cta', ($isEnterprise ? 'Book Demo' : 'Start Free'));
                     $href = $isEnterprise ? route('public.contact') : route('register');
 
                     if (auth()->check()) {
@@ -92,7 +92,7 @@
                             $href = route('dashboard');
                         } elseif (!$isEnterprise) {
                             $isUpgradeForm = true;
-                            $cta = 'Upgrade';
+                            $cta = 'Upgrade Plan';
                         }
                     }
 

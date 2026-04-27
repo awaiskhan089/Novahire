@@ -1,4 +1,4 @@
-﻿@php
+@php
     $appName = config('app.name', 'NovaHire');
 @endphp
 
@@ -19,7 +19,7 @@
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
                     <a href="{{ route('register') }}" class="inline-flex items-center rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-brand-500/20 transition hover:-translate-y-0.5 hover:bg-brand-500">
-                        Start Hiring
+                        Start Free
                     </a>
                     <a href="{{ route('public.contact') }}" class="inline-flex items-center rounded-xl border border-slate-200 bg-white/70 px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900">
                         Book Demo
@@ -32,8 +32,8 @@
             <div class="md:col-span-2">
                 <div class="flex items-center gap-3">
                     <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
-                        <img src="/images/logo/novahire-mark.svg" class="h-7 w-7 dark:hidden" alt="{{ $appName }}">
-                        <img src="/images/logo/novahire-mark-light.svg" class="hidden h-7 w-7 dark:block" alt="{{ $appName }}">
+                        <img src="/images/logo/novahire-mark.svg" width="28" height="28" class="h-7 w-7 dark:hidden" alt="{{ $appName }}">
+                        <img src="/images/logo/novahire-mark-light.svg" width="28" height="28" class="hidden h-7 w-7 dark:block" alt="{{ $appName }}">
                     </span>
                     <p class="text-xl font-semibold tracking-tight text-slate-900 dark:text-white">{{ $appName }}</p>
                 </div>
@@ -69,7 +69,7 @@
 
         <div class="mt-8 flex flex-col gap-2 border-t border-slate-200/80 pt-4 text-xs text-slate-500 dark:border-slate-800/80 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
             <p>&copy; {{ now()->year }} {{ $appName }}. All rights reserved.</p>
-            <p>Consistent recruiting experiences in light and dark mode.</p>
+            <p>Structured hiring workflows for recruiters, managers, and candidates.</p>
         </div>
     </div>
 </footer>

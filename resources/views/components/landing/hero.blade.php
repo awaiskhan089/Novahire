@@ -42,9 +42,10 @@
     ];
 
     $featuredStats = collect($heroPayload['stats'] ?? [])->take(3);
-    $featuredFeatures = collect($heroPayload['features'] ?? [])->take(3);
+    $featuredFeatures = collect($heroPayload['features'] ?? [])->take(2);
     $featuredRoles = collect($heroPayload['roles'] ?? [])->take(3);
-    $speedMetric = $featuredStats->get(1);
+    $primaryMetric = $featuredStats->first();
+    $secondaryMetric = $featuredStats->get(1);
     $title = trim((string) data_get($heroPayload, 'title', 'Hire faster with structured AI screening'));
     $titleWords = preg_split('/\s+/', $title) ?: [];
 
@@ -74,9 +75,8 @@
     }
 
     $supportSignals = [
-        ['label' => 'Talent orbit live', 'dot' => 'bg-sky-600 dark:bg-sky-100'],
-        ['label' => 'Structured AI signal', 'dot' => 'bg-teal-600 dark:bg-teal-100'],
-        ['label' => 'Global hiring lanes', 'dot' => 'bg-blue-600 dark:bg-blue-100'],
+        ['label' => 'Structured AI screening', 'dot' => 'bg-sky-600 dark:bg-sky-100'],
+        ['label' => 'Shared hiring workflow', 'dot' => 'bg-teal-600 dark:bg-teal-100'],
     ];
 
     $featureDots = [
@@ -145,17 +145,15 @@
                         class="inline-flex items-center gap-2 rounded-full border border-slate-950 bg-slate-950 px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_44px_rgba(15,23,42,0.16)] transition duration-200 hover:-translate-y-0.5 hover:bg-slate-900 hover:shadow-[0_20px_52px_rgba(15,23,42,0.2)] dark:border-white/18 dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-sky-100 dark:text-slate-950 dark:shadow-[0_16px_44px_rgba(56,189,248,0.22)] dark:hover:shadow-[0_20px_52px_rgba(56,189,248,0.26)]">
                         {{ data_get($heroPayload, 'primaryCta.label', 'Start Free') }}
                     </a>
-                    @if (filled(data_get($heroPayload, 'secondaryCta.href')))
-                        <a href="{{ data_get($heroPayload, 'secondaryCta.href', route('jobs.index')) }}"
+                    <a href="{{ route('public.contact') }}"
                             class="inline-flex items-center gap-2 rounded-full border border-slate-300/90 bg-white/92 px-6 py-3 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur-xl transition duration-200 hover:-translate-y-0.5 hover:bg-slate-50 dark:border-white/12 dark:bg-white/[0.05] dark:text-white dark:shadow-[0_14px_40px_rgba(2,6,23,0.2)] dark:hover:bg-white/[0.08]">
-                            {{ data_get($heroPayload, 'secondaryCta.label', 'Browse Jobs') }}
-                        </a>
-                    @endif
+                        Book Demo
+                    </a>
                 @endauth
             </div>
 
-            <div class="mt-10 grid gap-5 border-t border-slate-300/80 pt-6 dark:border-white/10 sm:grid-cols-3">
-                @foreach ($featuredStats as $index => $stat)
+            <div class="mt-10 grid gap-5 border-t border-slate-300/80 pt-6 dark:border-white/10 sm:grid-cols-2">
+                @foreach ($featuredStats->take(2) as $index => $stat)
                     <div @class([
                         'sm:border-l sm:border-slate-300/80 dark:sm:border-white/10 sm:pl-5' => $index > 0,
                     ])>
@@ -181,20 +179,20 @@
                     <div class="inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/85 px-3.5 py-2 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none">
                         <span class="h-2 w-2 rounded-full bg-sky-600 dark:bg-sky-100" aria-hidden="true"></span>
                         <span class="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-700/90 dark:text-white/72">
-                            Talent Orbit Live
+                            Recruiting Command Center
                         </span>
                     </div>
 
-                    @if ($speedMetric)
+                    @if ($primaryMetric)
                         <div class="rounded-full border border-slate-300/80 bg-white/85 px-3.5 py-2 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none">
                             <div class="flex items-center gap-2">
                                 <span class="h-2 w-2 rounded-full bg-teal-600 dark:bg-teal-100" aria-hidden="true"></span>
                                 <div>
                                     <p class="font-sora text-sm font-semibold text-slate-950 dark:text-white">
-                                        {{ data_get($speedMetric, 'value') }}
+                                        {{ data_get($primaryMetric, 'value') }}
                                     </p>
                                     <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
-                                        {{ data_get($speedMetric, 'label') }}
+                                        {{ data_get($primaryMetric, 'label') }}
                                     </p>
                                 </div>
                             </div>
@@ -214,6 +212,7 @@
 
                         <div class="relative z-10 h-[18rem] w-[14.5rem] overflow-hidden rounded-[2rem] border border-slate-200/80 bg-slate-950 shadow-[0_30px_90px_rgba(2,6,23,0.48)] dark:border-white/12 sm:h-[22rem] sm:w-[17rem] lg:h-[24rem] lg:w-[18.25rem]">
                             <img src="{{ data_get($heroPayload, 'visualImage') }}" alt="NovaHire recruiting visual"
+                                width="600" height="800"
                                 class="h-full w-full object-cover" fetchpriority="high" loading="eager">
                             <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.08)_0%,rgba(2,6,23,0.16)_32%,rgba(2,6,23,0.76)_100%)]"></div>
 
@@ -221,17 +220,17 @@
                                 <span class="inline-flex items-center gap-2 rounded-full border border-white/14 bg-slate-950/45 px-3 py-1.5 backdrop-blur-md">
                                     <span class="h-2 w-2 rounded-full bg-teal-100" aria-hidden="true"></span>
                                     <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/72">
-                                        Candidate Constellation
+                                        Candidate View
                                     </span>
                                 </span>
                             </div>
 
                             <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                                 <p class="font-sora text-lg font-semibold leading-tight text-white">
-                                    Signal over noise.
+                                    Clear signal. Faster decisions.
                                 </p>
                                 <p class="mt-1 text-xs leading-relaxed text-slate-200/74 sm:text-sm">
-                                    Every applicant routed into a cleaner decision system before the team ever loses momentum.
+                                    Structured screening and recruiter handoff in one workflow, without the usual spreadsheet sprawl.
                                 </p>
                             </div>
                         </div>
@@ -257,6 +256,27 @@
                                 </div>
                             </div>
                         @endforeach
+
+                        @if ($secondaryMetric)
+                            <div class="rounded-[1.35rem] border border-slate-200/80 bg-slate-950 px-5 py-4 text-white shadow-[0_18px_50px_rgba(15,23,42,0.2)] dark:border-white/12 dark:bg-white/5">
+                                <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-300">
+                                    Outcome Snapshot
+                                </p>
+                                <div class="mt-2 flex items-end justify-between gap-4">
+                                    <div>
+                                        <p class="font-sora text-2xl font-semibold leading-none">
+                                            {{ data_get($secondaryMetric, 'value') }}
+                                        </p>
+                                        <p class="mt-1 text-xs leading-relaxed text-slate-300">
+                                            {{ data_get($secondaryMetric, 'label') }}
+                                        </p>
+                                    </div>
+                                    <p class="max-w-[12rem] text-right text-xs leading-relaxed text-slate-300">
+                                        One shared view for recruiters, hiring managers, and interview coordination.
+                                    </p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -274,7 +294,7 @@
                         <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-1.5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]">
                             <span class="h-2 w-2 rounded-full bg-teal-600 dark:bg-teal-100" aria-hidden="true"></span>
                             <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-700/90 dark:text-white/70">
-                                Structured Signal
+                                Role Alignment
                             </span>
                         </span>
                     </div>

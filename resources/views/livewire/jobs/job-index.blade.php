@@ -19,40 +19,50 @@
     @endif
 
     <div class="rounded-2xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-5">
-            <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search title, location, department"
-                class="h-11 rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-12">
+            <div class="md:col-span-4">
+                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search title, location, department"
+                    class="h-11 w-full rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+            </div>
 
-            <select wire:model.live="statusFilter"
-                class="h-11 rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
-                <option value="">All statuses</option>
-                <option value="draft">Draft</option>
-                <option value="active">Active</option>
-                <option value="paused">Paused</option>
-                <option value="closed">Closed</option>
-            </select>
+            <div class="md:col-span-2">
+                <select wire:model.live="statusFilter"
+                    class="h-11 w-full rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+                    <option value="">All statuses</option>
+                    <option value="draft">Draft</option>
+                    <option value="active">Active</option>
+                    <option value="paused">Paused</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
 
-            <select wire:model.live="typeFilter"
-                class="h-11 rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
-                <option value="">All types</option>
-                <option value="full_time">Full Time</option>
-                <option value="part_time">Part Time</option>
-                <option value="contract">Contract</option>
-                <option value="internship">Internship</option>
-            </select>
+            <div class="md:col-span-2">
+                <select wire:model.live="typeFilter"
+                    class="h-11 w-full rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+                    <option value="">All types</option>
+                    <option value="full_time">Full Time</option>
+                    <option value="part_time">Part Time</option>
+                    <option value="contract">Contract</option>
+                    <option value="internship">Internship</option>
+                </select>
+            </div>
 
-            <select wire:model.live="locationFilter"
-                class="h-11 rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
-                <option value="">All locations</option>
-                <option value="onsite">On-site</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-            </select>
+            <div class="md:col-span-2">
+                <select wire:model.live="locationFilter"
+                    class="h-11 w-full rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
+                    <option value="">All locations</option>
+                    <option value="onsite">On-site</option>
+                    <option value="remote">Remote</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </div>
 
-            <button wire:click="$set('search', ''); $set('statusFilter', ''); $set('typeFilter', ''); $set('locationFilter', '')"
-                class="inline-flex h-11 items-center justify-center rounded-lg border border-gray-200 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800">
-                Reset Filters
-            </button>
+            <div class="md:col-span-2">
+                <button wire:click="$set('search', ''); $set('statusFilter', ''); $set('typeFilter', ''); $set('locationFilter', '')"
+                    class="inline-flex h-11 w-full items-center justify-center rounded-lg border border-gray-200 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800">
+                    Reset Filters
+                </button>
+            </div>
         </div>
     </div>
 

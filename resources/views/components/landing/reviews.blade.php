@@ -4,25 +4,25 @@
             'quote' => 'We cut screening time by over 60% and improved shortlist quality in the first week. The AI output is practical and easy for our hiring managers to trust.',
             'name' => 'Sarah Chen',
             'designation' => 'Head of Talent',
-            'src' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=720&q=70',
+            'src' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1400&q=80',
         ],
         [
             'quote' => 'The ranking flow feels built for real recruiting teams. We spend less time sorting CVs and more time interviewing the right candidates.',
             'name' => 'Marcus Lee',
             'designation' => 'Recruiting Lead',
-            'src' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=720&q=70',
+            'src' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1400&q=80',
         ],
         [
             'quote' => 'Collaboration between HR and hiring managers is finally clean. Pipeline visibility, interview coordination, and AI notes all live in one place.',
             'name' => 'Elena Roy',
             'designation' => 'HR Director',
-            'src' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=720&q=70',
+            'src' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1400&q=80',
         ],
         [
             'quote' => 'I now review only the strongest profiles. The platform removed repetitive filtering work and made hiring discussions much faster.',
             'name' => 'David Kim',
             'designation' => 'Hiring Manager',
-            'src' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=720&q=70',
+            'src' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=1400&q=80',
         ],
     ];
 @endphp
@@ -32,7 +32,7 @@
     x-data="{
         testimonials: {{ Js::from($testimonials) }},
         activeIndex: 0,
-        autoplay: true,
+        autoplay: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         hoverPrev: false,
         hoverNext: false,
         containerWidth: 1200,

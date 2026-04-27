@@ -1,4 +1,4 @@
-﻿@props(['appName' => config('app.name', 'NovaHire')])
+@props(['appName' => config('app.name', 'NovaHire')])
 
 @php
     $navItems = [
@@ -34,8 +34,8 @@
 
             <a href="{{ route('home') }}" class="ml-1 flex items-center gap-3 md:ml-0">
                 <span class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700">
-                    <img src="/images/logo/novahire-mark.svg" class="h-7 w-7 dark:hidden" alt="{{ $appName }}">
-                    <img src="/images/logo/novahire-mark-light.svg" class="hidden h-7 w-7 dark:block" alt="{{ $appName }}">
+                    <img src="/images/logo/novahire-mark.svg" width="28" height="28" class="h-7 w-7 dark:hidden" alt="{{ $appName }}">
+                    <img src="/images/logo/novahire-mark-light.svg" width="28" height="28" class="hidden h-7 w-7 dark:block" alt="{{ $appName }}">
                 </span>
                 <span class="truncate text-base font-semibold tracking-tight text-slate-900 dark:text-white">{{ $appName }}</span>
             </a>
@@ -68,7 +68,7 @@
                 Book Demo
             </a>
             <a href="{{ route('register') }}" class="inline-flex items-center rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-brand-500/20 transition hover:-translate-y-0.5 hover:bg-brand-500">
-                Start Hiring
+                Start Free
             </a>
         </div>
     </div>
@@ -94,8 +94,8 @@
     <div class="flex items-center justify-between border-b border-slate-200 px-4 py-4 dark:border-slate-800">
         <a href="{{ route('home') }}" id="nh-mob-logo-link" class="flex items-center gap-2.5">
             <span class="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700">
-                <img src="/images/logo/novahire-mark.svg" class="h-6 w-6 dark:hidden" alt="{{ $appName }}">
-                <img src="/images/logo/novahire-mark-light.svg" class="hidden h-6 w-6 dark:block" alt="{{ $appName }}">
+                <img src="/images/logo/novahire-mark.svg" width="24" height="24" class="h-6 w-6 dark:hidden" alt="{{ $appName }}">
+                <img src="/images/logo/novahire-mark-light.svg" width="24" height="24" class="hidden h-6 w-6 dark:block" alt="{{ $appName }}">
             </span>
             <span class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">{{ $appName }}</span>
         </a>
@@ -135,7 +135,7 @@
     <div class="border-t border-slate-200 px-4 py-5 dark:border-slate-800">
         <div class="space-y-2 rounded-2xl border border-slate-200/90 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/70">
             <a href="{{ route('register') }}" class="nh-mob-link inline-flex w-full items-center justify-center rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-brand-500/25 transition hover:bg-brand-500">
-                Start Hiring
+                Start Free
             </a>
             <a href="{{ route('public.contact') }}" class="nh-mob-link inline-flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
                 Book Demo

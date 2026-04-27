@@ -1164,9 +1164,17 @@ function initMobileNav() {
     if (overlay && overlay.parentElement !== document.body) document.body.appendChild(overlay);
 
     let isOpen = false;
+    let lastFocusedElement = null;
+
+    const getFocusableElements = () => Array.from(
+        drawer.querySelectorAll(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])',
+        ),
+    ).filter((element) => !element.hasAttribute('hidden'));
 
     const showDrawer = () => {
         isOpen = true;
+        lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : toggle;
 
         // Make elements visible before animating
         drawer.style.display  = 'flex';
@@ -1194,7 +1202,7 @@ function initMobileNav() {
         document.body.style.overflow = 'hidden';
 
         // Move focus into drawer
-        const first = drawer.querySelector('a[href], button:not([disabled])');
+        const [first] = getFocusableElements();
         if (first) first.focus();
     };
 
@@ -1216,7 +1224,7 @@ function initMobileNav() {
         if (closeIco) closeIco.classList.add('hidden');
 
         document.body.style.overflow = '';
-        toggle.focus();
+        (lastFocusedElement || toggle).focus();
 
         // Hide after transition ends
         const DURATION = 320;
@@ -1230,7 +1238,43 @@ function initMobileNav() {
 
     const onToggle    = () => (isOpen ? hideDrawer() : showDrawer());
     const onOverlay   = () => hideDrawer();
-    const onKeyDown   = (e) => { if (e.key === 'Escape' && isOpen) { e.preventDefault(); hideDrawer(); } };
+    const onKeyDown = (e) => {
+        if (!isOpen) {
+            return;
+        }
+
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            hideDrawer();
+            return;
+        }
+
+        if (e.key !== 'Tab') {
+            return;
+        }
+
+        const focusable = getFocusableElements();
+        if (!focusable.length) {
+            e.preventDefault();
+            drawer.focus();
+            return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+
+        if (e.shiftKey && active === first) {
+            e.preventDefault();
+            last.focus();
+            return;
+        }
+
+        if (!e.shiftKey && active === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    };
 
     // Auto-close at desktop breakpoint
     const mq = window.matchMedia('(min-width: 768px)');

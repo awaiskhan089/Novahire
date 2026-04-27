@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             TestUsersSeeder::class,
             DiscountVoucherSeeder::class,
+            JobsSeeder::class,
         ]);
     }
 }

@@ -45,9 +45,9 @@
         && str_contains((string) $analysis->reasoning, 'fallback')
     );
 
-    $syncQueueBlocksOpenAi = (string) config('queue.default', 'sync') === 'sync'
-        && !filter_var((string) env('AI_ALLOW_OPENAI_WITH_SYNC_QUEUE', false), FILTER_VALIDATE_BOOL)
-        && !filter_var((string) env('AI_FORCE_OPENAI', false), FILTER_VALIDATE_BOOL);
+    $syncQueueBlocksGemini = (string) config('queue.default', 'sync') === 'sync'
+        && !filter_var((string) env('AI_ALLOW_GEMINI_WITH_SYNC_QUEUE', false), FILTER_VALIDATE_BOOL)
+        && !filter_var((string) env('AI_FORCE_GEMINI', false), FILTER_VALIDATE_BOOL);
 
     $analysisLottiePayload = [
         'autoplay' => true,
@@ -202,10 +202,10 @@
     @if($fallbackDetected)
         <div class="rounded-xl border border-warning-200 bg-warning-50 px-4 py-3 text-xs font-semibold text-warning-700 dark:border-warning-700/30 dark:bg-warning-500/10 dark:text-warning-300">
             Fallback analysis detected.
-            @if($syncQueueBlocksOpenAi)
-                Local sync queue guard is blocking GPT calls. Set `AI_ALLOW_OPENAI_WITH_SYNC_QUEUE=true` or `AI_FORCE_OPENAI=true`, then click Refresh Analysis.
+            @if($syncQueueBlocksGemini)
+                Local sync queue guard is blocking Gemini calls. Set `AI_ALLOW_GEMINI_WITH_SYNC_QUEUE=true` or `AI_FORCE_GEMINI=true`, then click Refresh Analysis.
             @else
-                OpenAI request failed or is unavailable. Verify key/network/model settings, then click Refresh Analysis.
+                Gemini request failed or is unavailable. Verify key/network/model settings, then click Refresh Analysis.
             @endif
         </div>
     @endif

@@ -49,80 +49,7 @@
 @endphp
 
 <section class="nh-section cv-auto overflow-hidden"
-    x-data="{
-        items: {{ Js::from($stackItems) }},
-        active: 0,
-        hovering: false,
-        containerWidth: 980,
-        init() {
-            this.measure();
-            this.startAuto();
-            window.addEventListener('resize', () => this.measure(), { passive: true });
-        },
-        measure() {
-            this.containerWidth = this.$refs.stage ? this.$refs.stage.offsetWidth : 980;
-        },
-        maxOffset() {
-            return window.innerWidth < 768 ? 1 : 2;
-        },
-        cardWidth() {
-            if (window.innerWidth < 640) return Math.min(this.containerWidth - 24, 320);
-            if (window.innerWidth < 1024) return Math.min(this.containerWidth - 40, 430);
-            return Math.min(this.containerWidth - 120, 520);
-        },
-        cardHeight() {
-            return window.innerWidth < 640 ? 360 : 330;
-        },
-        spacing() {
-            return Math.max(16, Math.round(this.cardWidth() * 0.52));
-        },
-        stepDeg() {
-            const maxOffset = this.maxOffset();
-            return maxOffset > 0 ? 48 / maxOffset : 0;
-        },
-        signedOffset(index) {
-            const len = this.items.length;
-            const raw = index - this.active;
-            const alt = raw > 0 ? raw - len : raw + len;
-            return Math.abs(alt) < Math.abs(raw) ? alt : raw;
-        },
-        visible(index) {
-            return Math.abs(this.signedOffset(index)) <= this.maxOffset();
-        },
-        style(index) {
-            const off = this.signedOffset(index);
-            const abs = Math.abs(off);
-            const x = off * this.spacing();
-            const y = abs * 12 + (off === 0 ? -22 : 0);
-            const rotateZ = off * this.stepDeg();
-            const rotateX = off === 0 ? 0 : 12;
-            const scale = off === 0 ? 1.03 : 0.93;
-            const z = -abs * 140;
-            const opacity = this.visible(index) ? 1 : 0;
-            const zIndex = 100 - abs;
-            return `width:${this.cardWidth()}px;height:${this.cardHeight()}px;transform:translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateZ(${rotateZ}deg) rotateX(${rotateX}deg) scale(${scale});opacity:${opacity};z-index:${zIndex};`;
-        },
-        next() {
-            this.active = (this.active + 1) % this.items.length;
-            this.resetAuto();
-        },
-        prev() {
-            this.active = (this.active - 1 + this.items.length) % this.items.length;
-            this.resetAuto();
-        },
-        startAuto() {
-            this.stopAuto();
-            this.interval = setInterval(() => {
-                if (!this.hovering) this.active = (this.active + 1) % this.items.length;
-            }, 3200);
-        },
-        stopAuto() {
-            if (this.interval) clearInterval(this.interval);
-        },
-        resetAuto() {
-            this.startAuto();
-        },
-    }"
+    x-data="showcaseCarousel({{ Js::from($stackItems) }})"
     x-init="init()"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
@@ -156,7 +83,10 @@
                             x-transition:enter-end="opacity-100 translate-y-0"
                             class="card-stack-panel absolute bottom-0 cursor-pointer overflow-hidden rounded-[1.75rem] border-4 border-black/8 shadow-2xl dark:border-white/10"
                             :style="style(index)"
-                            @click="active = index; resetAuto()">
+                            role="button"
+                            tabindex="0"
+                            @click="active = index; resetAuto()"
+                            @keydown.enter="active = index; resetAuto()">
                             <div class="card-stack-panel-inner h-full w-full"
                                 :class="item.id === items[active].id ? 'ring-1 ring-white/20' : ''">
                                 <div class="absolute inset-0 bg-gradient-to-br opacity-95" :class="item.tone"></div>
@@ -204,4 +134,86 @@
             </div>
         </div>
     </div>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('showcaseCarousel', (items) => ({
+            items: items,
+            active: 0,
+            hovering: false,
+            reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+            containerWidth: 980,
+            init() {
+                this.measure();
+                if (!this.reducedMotion) {
+                    this.startAuto();
+                }
+                window.addEventListener('resize', () => this.measure(), { passive: true });
+            },
+            measure() {
+                this.containerWidth = this.$refs.stage ? this.$refs.stage.offsetWidth : 980;
+            },
+            maxOffset() {
+                return window.innerWidth < 768 ? 1 : 2;
+            },
+            cardWidth() {
+                if (window.innerWidth < 640) return Math.min(this.containerWidth - 24, 320);
+                if (window.innerWidth < 1024) return Math.min(this.containerWidth - 40, 430);
+                return Math.min(this.containerWidth - 120, 520);
+            },
+            cardHeight() {
+                return window.innerWidth < 640 ? 360 : 330;
+            },
+            spacing() {
+                return Math.max(16, Math.round(this.cardWidth() * 0.52));
+            },
+            stepDeg() {
+                const maxOffset = this.maxOffset();
+                return maxOffset > 0 ? 48 / maxOffset : 0;
+            },
+            signedOffset(index) {
+                const len = this.items.length;
+                const raw = index - this.active;
+                const alt = raw > 0 ? raw - len : raw + len;
+                return Math.abs(alt) < Math.abs(raw) ? alt : raw;
+            },
+            visible(index) {
+                return Math.abs(this.signedOffset(index)) <= this.maxOffset();
+            },
+            style(index) {
+                const off = this.signedOffset(index);
+                const abs = Math.abs(off);
+                const x = off * this.spacing();
+                const y = abs * 12 + (off === 0 ? -22 : 0);
+                const rotateZ = off * this.stepDeg();
+                const rotateX = off === 0 ? 0 : 12;
+                const scale = off === 0 ? 1.03 : 0.93;
+                const z = -abs * 140;
+                const opacity = this.visible(index) ? 1 : 0;
+                const zIndex = 100 - abs;
+                return `width:${this.cardWidth()}px;height:${this.cardHeight()}px;transform:translateX(${x}px) translateY(${y}px) translateZ(${z}px) rotateZ(${rotateZ}deg) rotateX(${rotateX}deg) scale(${scale});opacity:${opacity};z-index:${zIndex};`;
+            },
+            next() {
+                this.active = (this.active + 1) % this.items.length;
+                this.resetAuto();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.items.length) % this.items.length;
+                this.resetAuto();
+            },
+            startAuto() {
+                if (this.reducedMotion) return;
+                this.stopAuto();
+                this.interval = setInterval(() => {
+                    if (!this.hovering) this.active = (this.active + 1) % this.items.length;
+                }, 3200);
+            },
+            stopAuto() {
+                if (this.interval) clearInterval(this.interval);
+            },
+            resetAuto() {
+                this.startAuto();
+            },
+        }));
+    });
+</script>
 </section>
