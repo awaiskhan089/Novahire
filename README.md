@@ -86,3 +86,4 @@ Before production deploy:
 ## License
 
 This project includes upstream TailAdmin Laravel starter assets and NovaHire custom application code. Review third-party licenses before commercial redistribution.
+# Novahire
